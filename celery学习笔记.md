@@ -1,4 +1,6 @@
 
+###常规命令
+
 ```
 
  export C_FORCE_ROOT="true" && celery -A glanceTasks worker --autoreload --loglevel=info
@@ -20,4 +22,11 @@ celery inspect -A glanceTasks active --destination=yuanhao@mu77.com 启动选择
 celery -A proj control enable_events 查看活动信息
 ```
 
+###网址
+
+####中英文3.1文档
+
+http://docs.celeryproject.org/en/3.1/index.html
+
+http://docs.jinkan.org/docs/celery/index.html
 
