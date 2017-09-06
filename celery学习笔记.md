@@ -1,5 +1,5 @@
 
-###常规命令
+### 常规命令
 
 ```
 
@@ -22,9 +22,9 @@ celery inspect -A glanceTasks active --destination=yuanhao@mu77.com 启动选择
 celery -A proj control enable_events 查看活动信息
 ```
 
-###网址
+### 网址
 
-####中英文3.1文档
+#### 中英文3.1文档
 
 http://docs.celeryproject.org/en/3.1/index.html
 
