@@ -15,3 +15,18 @@ def aa(ee=2222):
 aa()
 ```
 
+<pre><code>
+
+
+$categories_query = "select * from ". TABLE_PRODUCTS;
+
+$categories = $db->Execute($categories_query);
+
+$categories->RecordCount(); //查看记录数
+
+while(!$categories->EOF) {
+    var_dump($categories->fields['products_id']);
+    $categories->MoveNext();
+}
+
+</code></pre>
