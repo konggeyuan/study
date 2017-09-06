@@ -30,3 +30,20 @@ http://docs.celeryproject.org/en/3.1/index.html
 
 http://docs.jinkan.org/docs/celery/index.html
 
+#### 学习教程
+
+##### 语言学习
+
+https://www.liaoxuefeng.com/wiki/001374738125095c955c1e6d8bb493182103fac9270762a000
+
+##### celery 案例
+
+http://www.cnblogs.com/chenice/p/6918435.html
+
+http://blog.csdn.net/happyAnger6/article/details/51408266
+
+##### Flask 教学
+
+http://www.bjhee.com/flask-5.html
+
+http://docs.jinkan.org/docs/flask/quickstart.html
