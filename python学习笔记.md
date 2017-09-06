@@ -6,7 +6,7 @@ def test(level):
     def log(func):
         def wrapper(*args):
             print 'cccc'
-            return func(*args)                                                                                       
+            return func(*args)
         return wrapper
     return log 
 
