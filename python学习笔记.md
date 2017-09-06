@@ -20,127 +20,75 @@ aa()
 
 ##celery 分布式调度模块，将代码导入后，通过其他代码直接调用该模块
 
+###调用方式
+
+
+通过在python代码中增加模块并运行的方式执行
+
+运行的方式：python->cerley->redis->执行代码
+
+
+```
+from glanceTasks import run
+run.delay()
+
 ```
 
-#!/usr/bin/python
-# -*- coding:utf-8 -*-
 
-"""
-glance 任务队列
-@version: 1.0
-@author: yuanhao<48194274@qq.com>
-@see:
-"""
-
-from celery import Celery
-import gevent
-import pymongo,sys,ast,requests,json,time
-from urllib2 import urlopen
-
-UNIX_TIMENOW = int(time.time());
-timenow = time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(UNIX_TIMENOW))
-CTIME = time.mktime(time.strptime(timenow, '%Y-%m-%d %H:%M:%S'))
-
-DB_HOST='localhost'
-DB_PORT=27017
+## 监控系统
 
 
-#本地的redis队列
-REDIS_HOST='127.0.0.1'
-REDIS_PORT='6379'
+### 数据采集
+
+#### 采集部分
 
 
-##
-# @Synopsis  取glance主机信息
-#
-# @Param DB_HOST    主机信息
-# @Param DB_PORT    主机端口
-#
-# @Returns   主机列表
-def getGlanceHosts(DB_HOST,DB_PORT):
++ 信息采集
+ 
+    - 服务器信息
+
+    从glances获取系统信息，保存入mongodb
+
+
+    - 自定义采集
     
-    #链接数据库
-    conn = pymongo.MongoClient(host=DB_HOST, port=DB_PORT)
-    gdb = conn.glances
+    从任意的采集点（自定义url）对应采集数据
 
-    return gdb
+    - 数据保存
 
-
-##
-# @Synopsis  主机获取数据,并写入mongdb
-#
-# @Param tservers 主机列表
-#
-# @Returns   
-def getGlancesData(gdb):
-    tservers = gdb.servers.find()
-    ip=[]
-    for server in tservers:
-        url = 'http://'+server['ip']+":61208/api/2/all"
-        r = requests.get(url)
-        record = r.json()
-        ip.append(gevent.spawn(postGlancesDataStore,record,gdb))
-        gevent.joinall(ip)
-        #postGlancesDataStore(record,gdb)
-    return 
+    存入mongodb中，不同的信息保存不同的库，mongodb做分片
 
 
-##
-# @Synopsis  存储数据库
-#
-# @Param record glances服务器ip
-#
-# @Returns   
-def postGlancesDataStore(record,gdb):
-    serverSystem = record['system']
-    cTime = time.mktime(time.strptime(record['now'], '%Y-%m-%d %H:%M:%S'))
-    monitors = [
-        'cpu', 'memswap', 'mem', 'diskio', 'network',
-        'fs', 'processcount', 'ports', 'docker']
-    for i in record:
-       if i in monitors:
-           if isinstance(record[i], dict):
-               record[i]['ctime'] = cTime
-               record[i]['hostname'] = serverSystem['hostname']
-               record[i]['hr_name'] = serverSystem['hr_name']
++ 数据存储
+    
+    - 存储配置
 
-               tb = 'gdb.'+i
-               tb = eval(tb.encode('utf-8'))
-               tb.insert(record[i])
-                
-           if isinstance(record[i], list):
-               for l in record[i]:
+    选择不同的数据驱动，目前存在mongdb中，mongodb做分片，不同的数据库存不同的内容
 
-                   # unicode转换
+    - 写入
 
-                   tmp = json.dumps(l)
-                   tmp = json.loads(tmp)
+    - 读取
 
-                   tmp['ctime'] = cTime 
-                   tmp['hostname'] = serverSystem['hostname']
-                   tmp['hr_name'] = serverSystem['hr_name']
-                   if len(tmp) != 0:
-                       # print(mydb.i.insert(tmp))
-                       tb = 'gdb.'+i
-                       tb = eval(tb.encode('utf-8'))
-                       tb.insert(tmp)
-
-    return 
-
-BORKER = 'redis://'+REDIS_HOST+':'+REDIS_PORT
-app = Celery('glance_tasks',broker=BORKER)
-@app.task()
-
-##
-# @Synopsis  任务程序
-#
-# @Returns   
-def run():
-    global CTIME,DB_HOST,DB_PORT,timenow
-    hosts=getGlanceHosts(DB_HOST,DB_PORT)
-    getGlancesData(hosts)
-    #return timenow+'---------->'+' ok'
+    - 状态
 
 
-```
++ 数据处理
+    
+    - 触发条件设置
+
+    - 计算处理
+
+
+#### 任务调度
+   
++ 查询任务
+    - celery.app.control.Inspect
+
++ 更改任务
+
++ 定时任务
+
++ 处理反馈
+
+
 
