@@ -20,6 +20,17 @@ celery inspect -A glanceTasks active --destination=yuanhao@mu77.com 启动选择
 
 
 celery -A proj control enable_events 查看活动信息
+
+
+from automatic_task.module1 import run
+
+├── __init__.py
+├── module1
+│   ├── task1.py
+├── task3.py
+├── taskconfig.py
+
+
 ```
 
 ### 网址
@@ -41,6 +52,11 @@ https://www.liaoxuefeng.com/wiki/001374738125095c955c1e6d8bb493182103fac9270762a
 http://www.cnblogs.com/chenice/p/6918435.html
 
 http://blog.csdn.net/happyAnger6/article/details/51408266
+
+https://segmentfault.com/a/1190000007780963
+
+http://blog.csdn.net/happyanger6/article/details/51533321
+
 
 ##### Flask 教学
 
