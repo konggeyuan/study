@@ -22,6 +22,10 @@ celery inspect -A glanceTasks active --destination=yuanhao@mu77.com 启动选择
 celery -A proj control enable_events 查看活动信息
 
 
+flower  -A automatic_task --port=5555
+
+from automatic_task.task1 import execute
+
 from automatic_task.module1 import run
 
 ├── __init__.py
@@ -53,10 +57,17 @@ http://www.cnblogs.com/chenice/p/6918435.html
 
 http://blog.csdn.net/happyAnger6/article/details/51408266
 
+http://blog.csdn.net/happyAnger6/article/details/51404837
+
 https://segmentfault.com/a/1190000007780963
 
 http://blog.csdn.net/happyanger6/article/details/51533321
 
+https://my.oschina.net/siddontang/blog/284107
+
+http://www.cnblogs.com/kaituorensheng/p/5196595.html
+
+https://segmentfault.com/a/1190000010112848
 
 ##### Flask 教学
 
