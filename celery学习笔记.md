@@ -51,6 +51,8 @@ http://docs.jinkan.org/docs/celery/index.html
 
 https://www.liaoxuefeng.com/wiki/001374738125095c955c1e6d8bb493182103fac9270762a000
 
+定时任务 http://blog.csdn.net/sicofield/article/details/50937338
+
 ##### celery 案例
 
 http://www.cnblogs.com/chenice/p/6918435.html
